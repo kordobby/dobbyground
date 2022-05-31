@@ -1,5 +1,6 @@
 /* 내가 사용할 Reducer#1 */
 
+import { Map, List } from 'immutable';
 
 // 1. action type 설정
 const ADD_SPELL = 'magicReducer/ADD_SPELL';
