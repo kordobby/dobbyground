@@ -57,7 +57,7 @@ const todos = (state = initialState, action) => {
     case GET_TODOS_ERROR:
       return {
         ...state,
-        error: action.payload,  // payload = 작업 실패 내용
+        error: action.payload  // payload = 작업 실패 내용
       };
   }
 }
