@@ -4,6 +4,7 @@ import { Map, List } from 'immutable';
 
 // 1. action type 설정
 const ADD_SPELL = 'magicReducer/ADD_SPELL';
+const DEL_SPELL = 'magicReducer/DEL_SPELL';
 
 // 2. 액션함수 생성 
             // 풀어서 생각해보자.....!
@@ -14,18 +15,18 @@ const ADD_SPELL = 'magicReducer/ADD_SPELL';
                 type : ADD_SPELL,
                 add : { spell, category,  about } }) 모습으로 사용됨 */
             // 그럼 spell, category, about 은 어디에 저장된 상태지? => state 는 store에 저장되어있고, 그 값을 reducer가 수정해준다?
-export const addSpell = ( spell, category, about ) => ({ 
-  type: ADD_SPELL,
-  add : {
-    spell,
-    category,
-    about
-  }
-});
+export const addSpell = ( payload ) => ({ 
+  type: ADD_SPELL, payload });
+
+export const delSpell = ( payload ) => {
+  return { type : DEL_SPELL, payload }
+}
 
 // 3. 초깃값 설정
-const initialState = [
-];
+const initialState = {
+  spells : []
+};
+
 
 // 4. Reducer 선언
                      // 4-1. 나는 magicReducer 라는 리듀서를 사용할거야
@@ -35,8 +36,10 @@ export default function magicReducer( state = initialState, action) {
         // 4-4. swtich 는 magicReducer의 두번째 인자로 넣어준 action의 type을 case 적용의 조건으로 사용하게 될 것
   switch (action.type) {  // 왜 action.type 일까? => store 에서 관리하는 action 에 값이 담긴거라서?
     case ADD_SPELL:  // action type이 ADD_SPELL 인 경우,
-      return state.concat(action.add);  // 배열형태로 선언된 magicReducer의 state에 action.add 를 넣어줄 것
+      return { spells : [...state.spells, action.payload]}  // 배열형태로 선언된 magicReducer의 state에 action.add 를 넣어줄 것
                                         /* {  spell, category, about } */
+    case DEL_SPELL :
+      return { spells : state.spells.filter((value, index) => index !== action.payload)}
     default:
       return state;
   }
